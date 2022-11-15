@@ -3,7 +3,8 @@ This example shows how to detect objects in an image using Royale's python wrapp
 The yolo related code is based on [this code](https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py).
 
 ## How to install
-You need the Royale Python Wrapper and Python (Version 3.7). 
+You need the Royale Python Wrapper and Python (Version 3.7). To use the python wrapper you need to set the variable `ROYALE_DIR` (line 31 in sample_yolo.py) 
+to the python folder inside your royale installation. 
 
 This sample requires a few python libraries: OpenCV, Numpy, Matplotlib
 You can easily install them via pip.

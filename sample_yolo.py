@@ -16,22 +16,26 @@ into the network. Then we draw bounding boxes around the found object.
 """
 
 import argparse
-import roypy
 import queue
 import sys
 import threading
-from roypy_sample_utils import CameraOpener, add_camera_opener_options
-from roypy_platform_utils import PlatformHelper
 import os
 
 import numpy as np
+import cv2
 
 os.environ['PATH'] = 'C:/projects/opencv-3.4.5_build/bin/Release' + os.pathsep + os.environ['PATH']
 
-import cv2
+# insert the path to your royale installation here:
+# note that you need \\ instead of \
+ROYALE_DIR = "C:\\Program Files\\royale\\4.23.0.1062\\python"
+sys.path.append(ROYALE_DIR)
 
-# YOLO STUFF
-# code from: https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py
+import roypy
+from roypy_sample_utils import CameraOpener, add_camera_opener_options
+from roypy_platform_utils import PlatformHelper
+
+# yolo code from: https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py
 
 CLASSES = None
 with open("yoloclasses.txt", 'r') as f:
