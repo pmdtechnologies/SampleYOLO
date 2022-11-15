@@ -11,7 +11,7 @@
 The Camera's lens parameters are optionally used to remove the lens distortion and then the image is displayed using openCV windows.
 Press 'd' on the keyboard to toggle the distortion while a window is selected. Press esc to exit.
 
-Additionally this sample implements the yolo v3 network for object detection. We convert the image to rgb and then feed this image
+Additionally this sample implements the YOLO v3 network for object detection. We convert the image to rgb and then feed this image
 into the network. Then we draw bounding boxes around the found object.
 """
 
@@ -24,10 +24,8 @@ import os
 import numpy as np
 import cv2
 
-os.environ['PATH'] = 'C:/projects/opencv-3.4.5_build/bin/Release' + os.pathsep + os.environ['PATH']
-
-# insert the path to your royale installation here:
-# note that you need \\ instead of \
+# insert the path to your Royale installation here:
+# note that you need to use \\ instead of \ on Windows
 ROYALE_DIR = "C:\\Program Files\\royale\\4.23.0.1062\\python"
 sys.path.append(ROYALE_DIR)
 
@@ -35,7 +33,7 @@ import roypy
 from roypy_sample_utils import CameraOpener, add_camera_opener_options
 from roypy_platform_utils import PlatformHelper
 
-# yolo code from: https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py
+# YOLO code from: https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py
 
 CLASSES = None
 with open("yoloclasses.txt", 'r') as f:
@@ -58,7 +56,7 @@ def draw_prediction(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
 def detectObjects(img):
     Width = img.shape[1]
     Height = img.shape[0]
-    scale = 1/255 #0.00392
+    scale = 1/255
 
     blob = cv2.dnn.blobFromImage(img, scale, (416,416), (0,0,0), False, crop=False)
     net.setInput(blob)
@@ -144,11 +142,11 @@ class MyListener(roypy.IDepthDataListener):
         if self.undistortImage: 
             grayImage8 = cv2.undistort(grayImage8,self.cameraMatrix,self.distortionCoefficients)
 
-        # convert the image to rgb first, because yolo needs 3 channels, and then detect the objects
+        # convert the image to rgb first, because YOLO needs 3 channels, and then detect the objects
         yoloResultImageGray = detectObjects(cv2.cvtColor(grayImage8, cv2.COLOR_GRAY2RGB))
 
         # finally show the images
-        cv2.imshow("Yolo Objects on Gray Image", yoloResultImageGray)
+        cv2.imshow("YOLO Objects on Gray Image", yoloResultImageGray)
 
         self.lock.release()
         self.done = True

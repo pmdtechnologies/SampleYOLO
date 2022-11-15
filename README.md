@@ -1,17 +1,17 @@
 # Tutorial - Object Detection with YOLO
-This example shows how to detect objects in an image using Royale's python wrapper and the pre-trained [yolo-network](https://pjreddie.com/media/files/papers/YOLOv3.pdf).
-The yolo related code is based on [this code](https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py).
+This example shows how to detect objects in an image using Royale's Python wrapper and the pre-trained [YOLO network](https://pjreddie.com/media/files/papers/YOLOv3.pdf).
+The YOLO related code was inspired by [this](https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolo_opencv.py).
 
 ## How to install
-You need the Royale Python Wrapper and Python (Version 3.7). To use the python wrapper you need to set the variable `ROYALE_DIR` (line 31 in sample_yolo.py) 
-to the python folder inside your royale installation. 
+For this example you will need the Royale Python Wrapper and Python (Version 3.7). To use the Python wrapper you need to set the variable `ROYALE_DIR` (line 31 in sample_yolo.py) 
+to the Python folder inside your Royale installation. 
 
-This sample requires a few python libraries: OpenCV, Numpy, Matplotlib
+This sample requires a few additional Python libraries: OpenCV, Numpy, Matplotlib.
 You can easily install them via pip.
 
-Finally you need to download the yolo [weights](https://pjreddie.com/media/files/yolov3-tiny.weights), [config](https://github.com/pjreddie/darknet/blob/master/cfg/yolov3-tiny.cfg)
+Finally you need to download the YOLO [weights](https://pjreddie.com/media/files/yolov3-tiny.weights), [config](https://github.com/pjreddie/darknet/blob/master/cfg/yolov3-tiny.cfg)
 and [classes](https://github.com/arunponnusamy/object-detection-opencv/blob/master/yolov3.txt) (rename the file to yoloclasses.txt) and put them in the same directory as this code.
-We use the third version of tiny YOLO, but it should be possible to use other versions of yolo, too, if
+We use the third version of tiny YOLO, but it should be possible to use other versions of YOLO, too, if
 you have the corresponding weights, config and classes. 
 
 ## Code explanation
@@ -143,11 +143,11 @@ needs to be converted to rgb first, because YOLO expects three channels as input
 After this we **display the image**. 
 
 ```py
-        # convert the image to rgb first, because yolo needs 3 channels, and then detect the objects
+        # convert the image to rgb first, because YOLO needs 3 channels, and then detect the objects
         yoloResultImageGray = detectObjects(cv2.cvtColor(grayImage8, cv2.COLOR_GRAY2RGB))
 
         # finally show the images
-        cv2.imshow("Yolo Objects on Gray Image", yoloResultImageGray)
+        cv2.imshow("YOLO Objects on Gray Image", yoloResultImageGray)
 ```
 
 ## Processing the event queue 
@@ -193,7 +193,7 @@ COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 net = cv2.dnn.readNet("yolov3-tiny.weights", "yolov3-tiny.cfg")
 ```
 
-After setting some parameters, we iterate over the outputs of the yolo net and their detections. If we
+After setting some parameters, we iterate over the outputs of the YOLO net and their detections. If we
 are more than 10% sure that there is an object, we save its class, the confidence value and the coordinates of its 
 bounding box. 
 Finally, for each object we **[draw](#drawing-the-predictions) a bounding box** and **print the class** to which it belongs **and the confidence** we have
@@ -203,7 +203,7 @@ that it actually belongs to this class on the image.
 def detectObjects(img):
     Width = img.shape[1]
     Height = img.shape[0]
-    scale = 1/255 #0.00392
+    scale = 1/255
 
     blob = cv2.dnn.blobFromImage(img, scale, (416,416), (0,0,0), False, crop=False)
     net.setInput(blob)
