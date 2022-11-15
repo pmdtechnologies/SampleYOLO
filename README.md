@@ -91,7 +91,7 @@ distortion coefficients from the camera parameters.
 
 ### data listener
 The `MyListener` class contains a function to **handle new data** and a function to **display this data** as images.
-New data is added to a queue that is then [processed](#Processing the event queue). 
+New data is added to a queue that is then [processed](#processing-the-event-queue). 
 
 ```py
     def onNewData(self, data):
@@ -137,7 +137,7 @@ It is possible to toogle the undistortion of the image by pressing `d`.
             grayImage8 = cv2.undistort(grayImage8,self.cameraMatrix,self.distortionCoefficients)
 ```
 
-The **object detection** happens in the next step. To do this we call [detectObjects](#Object detection with YOLO) on our grey image. The image
+The **object detection** happens in the next step. To do this we call [detectObjects](#object-detection-with-yolo) on our grey image. The image
 needs to be converted to rgb first, because YOLO expects three channels as input.
 After this we **display the image**. 
 
@@ -150,8 +150,8 @@ After this we **display the image**.
 ```
 
 ## Processing the event queue 
-This function takes a data element from the queue, that the [data listener](#data listener) creates, and
-gives it to the paint function of the [listener](#data listener) to display it. 
+This function takes a data element from the queue, that the [data listener](#data-listener) creates, and
+gives it to the paint function of the [listener](#data-listener) to display it. 
 The processing goes on as long as there are some elements on the queue and `esc` is not pressed.
 
 ```py
@@ -195,7 +195,7 @@ net = cv2.dnn.readNet("yolov3-tiny.weights", "yolov3-tiny.cfg")
 After setting some parameters, we iterate over the outputs of the yolo net and their detections. If we
 are more than 10% sure that there is an object, we save its class, the confidence value and the coordinates of its 
 bounding box. 
-Finally, for each object we **[draw](#drawing the predictions) a bounding box** and **print the class** to which it belongs **and the confidence** we have
+Finally, for each object we **[draw](#drawing-the-predictions) a bounding box** and **print the class** to which it belongs **and the confidence** we have
 that it actually belongs to this class on the image. 
 
 ```py
