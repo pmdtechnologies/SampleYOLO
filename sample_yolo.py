@@ -19,7 +19,6 @@ import argparse
 import queue
 import sys
 import threading
-import os
 
 import numpy as np
 import cv2
