@@ -257,3 +257,4 @@ def draw_prediction(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
     cv2.rectangle(img, (x,y), (x_plus_w,y_plus_h), color, 2)
     cv2.putText(img, label, (x-10,y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 ```
+This will give you output similar to this : [Cup that was found in the image](yolo_cup.jpg)
