@@ -190,7 +190,7 @@ def main ():
     add_camera_opener_options (parser)
     options = parser.parse_args()
    
-    opener = CameraOpener (options, min_access_level=1)
+    opener = CameraOpener (options)
 
     try:
         cam = opener.open_camera ()
