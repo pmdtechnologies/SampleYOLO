@@ -100,8 +100,7 @@ New data is added to a queue that is then [processed](#processing-the-event-queu
         self.queue.put(p)
 ```
 
-The images are created from the data that is captured by the camera. We **create two images**: one containing
-the depth data and one containing grey values. 
+The images are created from the data that is captured by the camera. We **create one image** that containes the gray values. 
 It is possible to toogle the undistortion of the image by pressing `d`.
 
 ```py
