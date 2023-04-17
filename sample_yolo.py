@@ -24,8 +24,8 @@ import numpy as np
 import cv2
 
 # insert the path to your Royale installation here:
-# note that you need to use \\ instead of \ on Windows
-ROYALE_DIR = "C:/royale/4.24.0.1201/python"
+# note that you need to use \\ or / instead of \ on Windows
+ROYALE_DIR = "C:/Program Files/royale/5.0.0.1533/python"
 sys.path.append(ROYALE_DIR)
 
 import roypy
@@ -116,10 +116,26 @@ class MyListener(roypy.IDepthDataListener):
         # mutex to lock out changes to the distortion while drawing
         self.lock.acquire()
 
-        gray = data[:, :, 4]
+        depth = data[:, :, 2]
+        gray = data[:, :, 3]
+        confidence = data[:, :, 4]
 
-        self.adjustGrayValue(gray)
-        grayImage8 = np.uint8(gray)
+        zImage = np.zeros(depth.shape, np.float32)
+        grayImage = np.zeros(depth.shape, np.float32)
+
+        # iterate over matrix, set zImage values to z values of data
+        # also set grayImage adjusted gray values
+        xVal = 0
+        yVal = 0
+        for x in zImage:        
+            for y in x:
+                if confidence[xVal][yVal]> 0:
+                  grayImage[xVal,yVal] = self.adjustGrayValue(gray[xVal][yVal])
+                yVal=yVal+1
+            yVal = 0
+            xVal = xVal+1
+
+        grayImage8 = np.uint8(grayImage)
 
         # apply undistortion
         if self.undistortImage: 
@@ -161,12 +177,10 @@ class MyListener(roypy.IDepthDataListener):
         self.lock.release()
 
     # Map the gray values from the camera to 0..255
-    def adjustGrayValue(self,grayImage):
-        limit = 1200 # try different values, to find the one that fits your environment best
-        for y in range(len(grayImage)):
-            for x in range(len(grayImage[y])):
-                clampedVal = min(limit,grayImage[y][x])
-                grayImage[y][x] = clampedVal / limit * 255
+    def adjustGrayValue(self,grayValue):
+        clampedVal = min(400,grayValue) # try different values, to find the one that fits your environment best
+        newGrayValue = clampedVal / 400 * 255
+        return newGrayValue
 
 def main ():
     # Set the available arguments
