@@ -111,10 +111,26 @@ It is possible to toogle the undistortion of the image by pressing `d`.
         # mutex to lock out changes to the distortion while drawing
         self.lock.acquire()
 
-        gray = data[:, :, 4]
+        depth = data[:, :, 2]
+        gray = data[:, :, 3]
+        confidence = data[:, :, 4]
 
-        self.adjustGrayValue(gray)
-        grayImage8 = np.uint8(gray)
+        zImage = np.zeros(depth.shape, np.float32)
+        grayImage = np.zeros(depth.shape, np.float32)
+
+        # iterate over matrix, set zImage values to z values of data
+        # also set grayImage adjusted gray values
+        xVal = 0
+        yVal = 0
+        for x in zImage:        
+            for y in x:
+                if confidence[xVal][yVal]> 0:
+                  grayImage[xVal,yVal] = self.adjustGrayValue(gray[xVal][yVal])
+                yVal=yVal+1
+            yVal = 0
+            xVal = xVal+1
+
+        grayImage8 = np.uint8(grayImage)
 
         # apply undistortion
         if self.undistortImage: 
