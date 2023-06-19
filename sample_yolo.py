@@ -25,7 +25,7 @@ import cv2
 
 # insert the path to your Royale installation here:
 # note that you need to use \\ or / instead of \ on Windows
-ROYALE_DIR = "C:/Program Files/royale/5.2.0.1936/python"
+ROYALE_DIR = "C:/Program Files/royale/5.4.0.2112/python"
 sys.path.append(ROYALE_DIR)
 
 import roypy
